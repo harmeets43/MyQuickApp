@@ -2,7 +2,9 @@ using DataAccessLayer.Models;
 using DataAccessLayer.Models.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,10 +21,8 @@ namespace DataAccessLayer
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
 
-
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -64,15 +64,11 @@ namespace DataAccessLayer
             builder.Entity<OrderDetail>().Property(p => p.Discount).HasColumnType(priceDecimalType);
         }
 
-
-
-
         public override int SaveChanges()
         {
             UpdateAuditEntities();
             return base.SaveChanges();
         }
-
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -100,25 +96,26 @@ namespace DataAccessLayer
             var modifiedEntries = ChangeTracker.Entries()
                 .Where(x => x.Entity is IBaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
+            UpdateTimeStamp(modifiedEntries);
+        }
 
+        private void UpdateTimeStamp(IEnumerable<EntityEntry> modifiedEntries)
+        {
+            var now = DateTime.UtcNow;
             foreach (var entry in modifiedEntries)
             {
                 var entity = (IBaseEntity)entry.Entity;
-                DateTime now = DateTime.UtcNow;
+                entity.UpdatedDate = now;
+                entity.UpdatedBy = CurrentUserId;
 
                 if (entry.State == EntityState.Added)
                 {
                     entity.CreatedDate = now;
                     entity.CreatedBy = CurrentUserId;
+                    return;
                 }
-                else
-                {
-                    base.Entry(entity).Property(x => x.CreatedBy).IsModified = false;
-                    base.Entry(entity).Property(x => x.CreatedDate).IsModified = false;
-                }
-
-                entity.UpdatedDate = now;
-                entity.UpdatedBy = CurrentUserId;
+                base.Entry(entity).Property(x => x.CreatedBy).IsModified = false;
+                base.Entry(entity).Property(x => x.CreatedDate).IsModified = false;
             }
         }
     }
