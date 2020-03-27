@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1062
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyQuickApp", "MyQuickApp\MyQuickApp.csproj", "{388D3085-8975-4B82-A1C6-B22835575882}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{76B6142E-3EB6-4919-8095-446C83789D22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{388D3085-8975-4B82-A1C6-B22835575882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{388D3085-8975-4B82-A1C6-B22835575882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{388D3085-8975-4B82-A1C6-B22835575882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{388D3085-8975-4B82-A1C6-B22835575882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B6142E-3EB6-4919-8095-446C83789D22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B6142E-3EB6-4919-8095-446C83789D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B6142E-3EB6-4919-8095-446C83789D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B6142E-3EB6-4919-8095-446C83789D22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9F650A0-6FB9-4C36-B95D-7FFB93301656}
+	EndGlobalSection
+EndGlobal

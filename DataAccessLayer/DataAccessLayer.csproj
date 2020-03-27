@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.0.1</Version>
+    <Description>Data Access Layer</Description>
+    <Copyright>Harmeet Singh</Copyright>
+    <PackageProjectUrl>harmeets43@gmail.com</PackageProjectUrl>
+    <Company>KH</Company>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0"/>
+  </ItemGroup>
+</Project>
