@@ -1,9 +1,10 @@
-using System;
-using System.Collections.Generic;
 using DataAccessLayer.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 
-namespace DataAccessLayer.Models {
+namespace DataAccessLayer.Models
+{
     public class AppUser : IdentityUser, IBaseEntity
     {
         public virtual string FriendlyName
@@ -13,7 +14,9 @@ namespace DataAccessLayer.Models {
                 string friendlyName = string.IsNullOrWhiteSpace(FullName) ? UserName : FullName;
 
                 if (!string.IsNullOrWhiteSpace(JobTitle))
+                {
                     friendlyName = $"{JobTitle} {friendlyName}";
+                }
 
                 return friendlyName;
             }

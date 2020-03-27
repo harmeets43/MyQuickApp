@@ -1,4 +1,3 @@
-using DataAccessLayer;
 using DataAccessLayer.Core.Interfaces;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Http;
@@ -8,9 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using DataAccessLayer.Core;
 
 namespace DataAccessLayer.Core
 {
@@ -69,7 +66,9 @@ namespace DataAccessLayer.Core
                 .SingleOrDefaultAsync();
 
             if (user == null)
+            {
                 return null;
+            }
 
             var userRoleIds = user.Roles.Select(r => r.RoleId).ToList();
 
@@ -89,10 +88,14 @@ namespace DataAccessLayer.Core
                 .OrderBy(u => u.UserName);
 
             if (page != -1)
+            {
                 usersQuery = usersQuery.Skip((page - 1) * pageSize);
+            }
 
             if (pageSize != -1)
+            {
                 usersQuery = usersQuery.Take(pageSize);
+            }
 
             var users = await usersQuery.ToListAsync();
 
@@ -112,8 +115,9 @@ namespace DataAccessLayer.Core
         {
             var result = await _userManager.CreateAsync(user, password);
             if (!result.Succeeded)
+            {
                 return (false, result.Errors.Select(e => e.Description).ToArray());
-
+            }
 
             user = await _userManager.FindByNameAsync(user.UserName);
 
@@ -147,8 +151,9 @@ namespace DataAccessLayer.Core
         {
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
+            {
                 return (false, result.Errors.Select(e => e.Description).ToArray());
-
+            }
 
             if (roles != null)
             {
@@ -161,14 +166,18 @@ namespace DataAccessLayer.Core
                 {
                     result = await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
                     if (!result.Succeeded)
+                    {
                         return (false, result.Errors.Select(e => e.Description).ToArray());
+                    }
                 }
 
                 if (rolesToAdd.Any())
                 {
                     result = await _userManager.AddToRolesAsync(user, rolesToAdd);
                     if (!result.Succeeded)
+                    {
                         return (false, result.Errors.Select(e => e.Description).ToArray());
+                    }
                 }
             }
 
@@ -182,7 +191,9 @@ namespace DataAccessLayer.Core
 
             var result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
             if (!result.Succeeded)
+            {
                 return (false, result.Errors.Select(e => e.Description).ToArray());
+            }
 
             return (true, new string[] { });
         }
@@ -191,7 +202,9 @@ namespace DataAccessLayer.Core
         {
             var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
             if (!result.Succeeded)
+            {
                 return (false, result.Errors.Select(e => e.Description).ToArray());
+            }
 
             return (true, new string[] { });
         }
@@ -201,7 +214,9 @@ namespace DataAccessLayer.Core
             if (!await _userManager.CheckPasswordAsync(user, password))
             {
                 if (!_userManager.SupportsUserLockout)
+                {
                     await _userManager.AccessFailedAsync(user);
+                }
 
                 return false;
             }
@@ -213,7 +228,9 @@ namespace DataAccessLayer.Core
         public async Task<bool> TestCanDeleteUserAsync(string userId)
         {
             if (await _context.Orders.Where(o => o.CashierId == userId).AnyAsync())
+            {
                 return false;
+            }
 
             //canDelete = !await ; //Do other tests...
 
@@ -226,7 +243,9 @@ namespace DataAccessLayer.Core
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user != null)
+            {
                 return await DeleteUserAsync(user);
+            }
 
             return (true, new string[] { });
         }
@@ -275,10 +294,14 @@ namespace DataAccessLayer.Core
                 .OrderBy(r => r.Name);
 
             if (page != -1)
+            {
                 rolesQuery = rolesQuery.Skip((page - 1) * pageSize);
+            }
 
             if (pageSize != -1)
+            {
                 rolesQuery = rolesQuery.Take(pageSize);
+            }
 
             var roles = await rolesQuery.ToListAsync();
 
@@ -289,17 +312,21 @@ namespace DataAccessLayer.Core
         public async Task<(bool Succeeded, string[] Errors)> CreateRoleAsync(AppRole role, IEnumerable<string> claims)
         {
             if (claims == null)
+            {
                 claims = new string[] { };
+            }
 
             string[] invalidClaims = claims.Where(c => ApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
             if (invalidClaims.Any())
+            {
                 return (false, new[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
-
+            }
 
             var result = await _roleManager.CreateAsync(role);
             if (!result.Succeeded)
+            {
                 return (false, result.Errors.Select(e => e.Description).ToArray());
-
+            }
 
             role = await _roleManager.FindByNameAsync(role.Name);
 
@@ -323,14 +350,17 @@ namespace DataAccessLayer.Core
             {
                 string[] invalidClaims = claims.Where(c => ApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
                 if (invalidClaims.Any())
+                {
                     return (false, new[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
+                }
             }
 
 
             var result = await _roleManager.UpdateAsync(role);
             if (!result.Succeeded)
+            {
                 return (false, result.Errors.Select(e => e.Description).ToArray());
-
+            }
 
             if (claims != null)
             {
@@ -346,7 +376,9 @@ namespace DataAccessLayer.Core
                     {
                         result = await _roleManager.RemoveClaimAsync(role, roleClaims.Where(c => c.Value == claim).FirstOrDefault());
                         if (!result.Succeeded)
+                        {
                             return (false, result.Errors.Select(e => e.Description).ToArray());
+                        }
                     }
                 }
 
@@ -356,7 +388,9 @@ namespace DataAccessLayer.Core
                     {
                         result = await _roleManager.AddClaimAsync(role, new Claim(ClaimConstants.Permission, ApplicationPermissions.GetPermissionByValue(claim)));
                         if (!result.Succeeded)
+                        {
                             return (false, result.Errors.Select(e => e.Description).ToArray());
+                        }
                     }
                 }
             }
@@ -376,7 +410,9 @@ namespace DataAccessLayer.Core
             var role = await _roleManager.FindByNameAsync(roleName);
 
             if (role != null)
+            {
                 return await DeleteRoleAsync(role);
+            }
 
             return (true, new string[] { });
         }

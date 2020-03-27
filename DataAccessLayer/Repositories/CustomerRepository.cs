@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories;
 using DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAccessLayer
 {
@@ -11,9 +11,9 @@ namespace DataAccessLayer
     {
 
         private ApplicationDbContext _appContext => (ApplicationDbContext)_context;
-        public CustomerRepository(ApplicationDbContext context): base(context)
+        public CustomerRepository(ApplicationDbContext context) : base(context)
         {
-            
+
         }
 
         public IEnumerable<Customer> GetAllCustomersData()

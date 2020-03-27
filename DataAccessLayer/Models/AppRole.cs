@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using DataAccessLayer.Models.Interfaces;
+﻿using DataAccessLayer.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 
 namespace DataAccessLayer.Models
 {
@@ -12,12 +12,12 @@ namespace DataAccessLayer.Models
 
         }
 
-        public AppRole(string roleName):base(roleName)
+        public AppRole(string roleName) : base(roleName)
         {
 
         }
 
-        public AppRole(string roleName, string description): base(roleName)
+        public AppRole(string roleName, string description) : base(roleName)
         {
             Description = description;
         }

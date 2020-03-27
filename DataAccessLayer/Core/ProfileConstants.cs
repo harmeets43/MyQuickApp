@@ -1,5 +1,6 @@
-namespace DataAccessLayer.Core {
-public static class ClaimConstants
+namespace DataAccessLayer.Core
+{
+    public static class ClaimConstants
     {
         ///<summary>A claim that specifies the subject of an entity</summary>
         public const string Subject = "sub";

@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace DataAccessLayer.Repositories.Interfaces {
-    public interface IBaseRepository<TEntity> where TEntity: class {
+namespace DataAccessLayer.Repositories.Interfaces
+{
+    public interface IBaseRepository<TEntity> where TEntity : class
+    {
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
 

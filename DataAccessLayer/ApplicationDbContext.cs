@@ -1,13 +1,11 @@
 using DataAccessLayer.Models;
+using DataAccessLayer.Models.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using DataAccessLayer.Models.Interfaces;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {

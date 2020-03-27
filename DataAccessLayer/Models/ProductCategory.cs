@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer.Models {
+namespace DataAccessLayer.Models
+{
     public class ProductCategory : BaseEntity
     {
         public int Id { get; set; }

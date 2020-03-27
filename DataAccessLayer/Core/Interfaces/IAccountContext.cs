@@ -1,9 +1,11 @@
+using DataAccessLayer.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DataAccessLayer.Models;
 
-namespace DataAccessLayer.Core.Interfaces {
-    public interface IAccountContext {
+namespace DataAccessLayer.Core.Interfaces
+{
+    public interface IAccountContext
+    {
         Task<bool> CheckPasswordAsync(AppUser user, string password);
         Task<(bool Succeeded, string[] Errors)> CreateRoleAsync(AppRole role, IEnumerable<string> claims);
         Task<(bool Succeeded, string[] Errors)> CreateUserAsync(AppUser user, IEnumerable<string> roles, string password);

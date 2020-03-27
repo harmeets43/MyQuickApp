@@ -1,5 +1,6 @@
-namespace DataAccessLayer.Core {
-public enum Gender
+namespace DataAccessLayer.Core
+{
+    public enum Gender
     {
         None,
         Female,

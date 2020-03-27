@@ -8,7 +8,7 @@ namespace DataAccessLayer
     {
         private ApplicationDbContext _appContext => (ApplicationDbContext)_context;
 
-        public ProductRepository(DbContext context): base(context)
+        public ProductRepository(DbContext context) : base(context)
         {
 
         }

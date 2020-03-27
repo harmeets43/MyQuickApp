@@ -1,11 +1,12 @@
+using DataAccessLayer.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using DataAccessLayer.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer.Repositories {
+namespace DataAccessLayer.Repositories
+{
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _context;
