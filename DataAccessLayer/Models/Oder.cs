@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer.Models {
-    public class Order: BaseEntity {
+namespace DataAccessLayer.Models
+{
+    public class Order : BaseEntity
+    {
         public int Id { get; set; }
         public decimal Discount { get; set; }
         public string Comments { get; set; }

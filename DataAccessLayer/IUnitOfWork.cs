@@ -4,9 +4,9 @@ namespace DataAccessLayer
 {
     public interface IUnitOfWork
     {
-        ICustomerRepository Customers {get;}
+        ICustomerRepository Customers { get; }
         IProductRepository Products { get; }
-        IOrdersRepository Orders { get;}
+        IOrdersRepository Orders { get; }
 
         int SaveChanges();
     }

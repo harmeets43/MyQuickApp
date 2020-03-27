@@ -1,16 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using DataAccessLayer.Core;
 using DataAccessLayer.Core.Interfaces;
 using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace DataAccessLayer {
-    public interface IDBInit {
+namespace DataAccessLayer
+{
+    public interface IDBInit
+    {
         Task populateDb();
-        
+
     }
 
     public class DBInit : IDBInit
@@ -20,7 +22,8 @@ namespace DataAccessLayer {
         private readonly ILogger<DBInit> _logger;
         public DBInit(ApplicationDbContext context,
                        IAccountContext accountContext,
-                       ILogger<DBInit> logger) {
+                       ILogger<DBInit> logger)
+        {
             _accountContext = accountContext;
             _context = context;
             _logger = logger;
@@ -180,7 +183,7 @@ namespace DataAccessLayer {
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Seeding initial data completed");
-            } 
+            }
         }
 
         private async Task EnsureRoleAsync(string roleName, string description, string[] claims)
@@ -192,7 +195,9 @@ namespace DataAccessLayer {
                 var result = await this._accountContext.CreateRoleAsync(applicationRole, claims);
 
                 if (!result.Succeeded)
+                {
                     throw new Exception($"Seeding \"{description}\" role failed. Errors: {string.Join(Environment.NewLine, result.Errors)}");
+                }
             }
         }
 
@@ -211,8 +216,9 @@ namespace DataAccessLayer {
             var result = await _accountContext.CreateUserAsync(applicationUser, roles, password);
 
             if (!result.Succeeded)
+            {
                 throw new Exception($"Seeding \"{userName}\" user failed. Errors: {string.Join(Environment.NewLine, result.Errors)}");
-
+            }
 
             return applicationUser;
         }

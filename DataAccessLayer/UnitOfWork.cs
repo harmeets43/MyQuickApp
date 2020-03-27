@@ -25,7 +25,9 @@ namespace DataAccessLayer
             get
             {
                 if (_customers == null)
+                {
                     _customers = new CustomerRepository(_context);
+                }
 
                 return _customers;
             }
@@ -38,7 +40,9 @@ namespace DataAccessLayer
             get
             {
                 if (_products == null)
+                {
                     _products = new ProductRepository(_context);
+                }
 
                 return _products;
             }
@@ -51,7 +55,9 @@ namespace DataAccessLayer
             get
             {
                 if (_orders == null)
+                {
                     _orders = new OrdersRepository(_context);
+                }
 
                 return _orders;
             }
